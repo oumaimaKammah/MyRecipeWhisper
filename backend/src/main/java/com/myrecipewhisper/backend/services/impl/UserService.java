@@ -1,6 +1,7 @@
 package com.myrecipewhisper.backend.services.impl;
 
 import com.myrecipewhisper.backend.repositories.UserRepository;
+import com.myrecipewhisper.backend.validators.UserValidator;
 import com.myrecipewhisper.backend.dtos.CreateUserDTO;
 import com.myrecipewhisper.backend.dtos.UpdateUserDTO;
 import com.myrecipewhisper.backend.entities.User;
@@ -15,9 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final UserValidator userValidator;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, UserValidator userValidator) {
         this.userRepository = userRepository;
+        this.userValidator = userValidator;
     }
 
     public List<User> getAllUsers() {
@@ -31,28 +34,25 @@ public class UserService {
 
     @Transactional
     public User createUser(CreateUserDTO dto) {
-        if(dto == null) {
+        if (dto == null) {
             throw new IllegalArgumentException("CreateUserDTO cannot be null");
         }
-        if(dto.username() == null || dto.email() == null || dto.password() == null) {
-            throw new IllegalArgumentException("Username, email, and password are required fields");
-        }
-        if (userRepository.existsByEmail(dto.email())) {
-            throw new IllegalArgumentException("Email already in use: " + dto.email());
-            
-        }
-        if (userRepository.existsByUsername(dto.username())) {
-            throw new IllegalArgumentException("Username already in use: " + dto.username());
-        }
+        userValidator.validateCreate(dto.email(), dto.username());
+
         var user = UserMapper.toUserEntity(dto);
+
         return userRepository.save(user);
     }
 
     @Transactional
     public User updateUser(Integer userId, UpdateUserDTO dto) {
-        var user = getUserById(userId);
+        if (dto == null) {
+            throw new IllegalArgumentException("UpdateUserDTO cannot be null");
+        }
+        userValidator.validateUpdate(userId, dto.email(), dto.username());
 
-        UserMapper.updateUserFromDTO(user,dto); 
+        User user = getUserById(userId);
+        UserMapper.updateUserFromDTO(user, dto);
 
         return userRepository.save(user);
     }
