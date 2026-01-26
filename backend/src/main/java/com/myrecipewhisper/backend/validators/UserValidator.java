@@ -1,6 +1,8 @@
 package com.myrecipewhisper.backend.validators;
 
 import org.springframework.stereotype.Component;
+
+import com.myrecipewhisper.backend.entities.User;
 import com.myrecipewhisper.backend.exceptions.EmailAlreadyUsedException;
 import com.myrecipewhisper.backend.exceptions.RessourceNotFoundException;
 import com.myrecipewhisper.backend.exceptions.UsernameAlreadyUsedException;
@@ -34,7 +36,7 @@ public class UserValidator {
     }
 
     public void validateUpdate(Integer userId, String newEmail, String newUsername) {
-        var user = userRepository.findById(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RessourceNotFoundException("User not found with id: " + userId));
 
         if (!user.getEmail().equals(newEmail) && !isEmailUnique(newEmail)) {
