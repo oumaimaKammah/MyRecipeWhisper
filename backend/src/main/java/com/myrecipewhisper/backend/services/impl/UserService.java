@@ -2,6 +2,9 @@ package com.myrecipewhisper.backend.services.impl;
 
 import com.myrecipewhisper.backend.repositories.UserRepository;
 import com.myrecipewhisper.backend.validators.UserValidator;
+
+import lombok.extern.slf4j.Slf4j;
+
 import com.myrecipewhisper.backend.dtos.CreateUserDTO;
 import com.myrecipewhisper.backend.dtos.UpdateUserDTO;
 import com.myrecipewhisper.backend.entities.User;
@@ -13,6 +16,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -24,10 +28,12 @@ public class UserService {
     }
 
     public List<User> getAllUsers() {
+        log.info("Fetching all users from the database");
         return userRepository.findAll();
     }
 
     public User getUserById(Integer userId) {
+        log.info("Fetching user with id: {}", userId);
         return userRepository.findById(userId)
                 .orElseThrow(() -> new RessourceNotFoundException("User not found with id: " + userId));
     }
@@ -35,32 +41,39 @@ public class UserService {
     @Transactional
     public User createUser(CreateUserDTO dto) {
         if (dto == null) {
+            log.error("CreateUserDTO is null");
             throw new IllegalArgumentException("CreateUserDTO cannot be null");
         }
         userValidator.validateCreate(dto.email(), dto.username());
 
         var user = UserMapper.toUserEntity(dto);
+        var saved = userRepository.save(user);
+        log.info("User created successfully with id {}", saved.getUserId());
 
-        return userRepository.save(user);
+        return saved;
     }
 
     @Transactional
     public User updateUser(Integer userId, UpdateUserDTO dto) {
         if (dto == null) {
+            log.error("UpdateUserDTO is null");
             throw new IllegalArgumentException("UpdateUserDTO cannot be null");
         }
         userValidator.validateUpdate(userId, dto.email(), dto.username());
 
         User user = getUserById(userId);
         UserMapper.updateUserFromDTO(user, dto);
+        var saved = userRepository.save(user);
+        log.info("User with id {} updated successfully", saved.getUserId());
 
-        return userRepository.save(user);
+        return saved;
     }
 
     @Transactional
     public void deleteUserById(Integer userId) {
         var user = getUserById(userId);
         userRepository.delete(user);
+        log.info("User with id {} deleted successfully", userId);
     }
 
 }
