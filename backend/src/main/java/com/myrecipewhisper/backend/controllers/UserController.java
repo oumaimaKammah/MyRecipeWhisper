@@ -15,9 +15,9 @@ import com.myrecipewhisper.backend.services.impl.UserService;
 
 import jakarta.validation.Valid;
 
-import com.myrecipewhisper.backend.dtos.CreateUserDTO;
 import com.myrecipewhisper.backend.dtos.UpdateUserDTO;
-import com.myrecipewhisper.backend.dtos.UserDTO;
+import com.myrecipewhisper.backend.dtos.user.CreateUserDTO;
+import com.myrecipewhisper.backend.dtos.user.UserDTO;
 import com.myrecipewhisper.backend.mappers.UserMapper;
 
 import java.util.List;
