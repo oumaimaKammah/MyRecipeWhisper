@@ -1,4 +1,4 @@
-package com.myrecipewhisper.backend.dtos;
+package com.myrecipewhisper.backend.dtos.user;
 
 import java.time.LocalDate;
 
@@ -8,8 +8,8 @@ import jakarta.validation.constraints.NotNull;
 
 public record UpdateUserDTO(
 
-                @NotBlank(message = "Username cannot be empty") String username,
-                @Email(message = "Email format is invalid") String email,
-                @NotNull LocalDate birthday) {
+        @NotBlank(message = "Username cannot be empty") String username,
+        @Email(message = "Email format is invalid") String email,
+        @NotNull LocalDate birthday) {
 
 }

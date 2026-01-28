@@ -5,8 +5,8 @@ import com.myrecipewhisper.backend.validators.UserValidator;
 
 import lombok.extern.slf4j.Slf4j;
 
-import com.myrecipewhisper.backend.dtos.UpdateUserDTO;
 import com.myrecipewhisper.backend.dtos.user.CreateUserDTO;
+import com.myrecipewhisper.backend.dtos.user.UpdateUserDTO;
 import com.myrecipewhisper.backend.entities.User;
 import com.myrecipewhisper.backend.exceptions.RessourceNotFoundException;
 import com.myrecipewhisper.backend.mappers.UserMapper;
