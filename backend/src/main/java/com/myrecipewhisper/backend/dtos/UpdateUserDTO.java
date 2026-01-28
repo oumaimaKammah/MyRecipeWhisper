@@ -8,8 +8,8 @@ import jakarta.validation.constraints.NotNull;
 
 public record UpdateUserDTO(
 
-        @NotBlank String username,
-        @Email String email,
-        @NotNull LocalDate birthday) {
+                @NotBlank(message = "Username cannot be empty") String username,
+                @Email(message = "Email format is invalid") String email,
+                @NotNull LocalDate birthday) {
 
 }
