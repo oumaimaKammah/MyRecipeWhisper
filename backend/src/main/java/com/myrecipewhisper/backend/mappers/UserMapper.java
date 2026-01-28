@@ -12,7 +12,7 @@ public class UserMapper {
             return null;
         }
         return new UserDTO(
-                user.getUserId(),
+                user.getId(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getBirthday(),
