@@ -48,7 +48,7 @@ public class UserService {
 
         var user = UserMapper.toUserEntity(dto);
         var saved = userRepository.save(user);
-        log.info("User created successfully with id {}", saved.getUserId());
+        log.info("User created successfully with id {}", saved.getId());
 
         return saved;
     }
@@ -64,7 +64,7 @@ public class UserService {
         User user = getUserById(userId);
         UserMapper.updateUserFromDTO(user, dto);
         var saved = userRepository.save(user);
-        log.info("User with id {} updated successfully", saved.getUserId());
+        log.info("User with id {} updated successfully", saved.getId());
 
         return saved;
     }
