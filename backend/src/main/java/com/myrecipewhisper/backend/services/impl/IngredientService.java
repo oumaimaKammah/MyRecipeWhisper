@@ -1,9 +1,10 @@
-package com.myrecipewhisper.backend.services;
+package com.myrecipewhisper.backend.services.impl;
 
 import com.myrecipewhisper.backend.dtos.ingredient.CreateIngredientDTO;
 import com.myrecipewhisper.backend.dtos.ingredient.IngredientResponseDTO;
 import com.myrecipewhisper.backend.dtos.ingredient.UpdateIngredientDTO;
 import com.myrecipewhisper.backend.entities.Ingredient;
+import com.myrecipewhisper.backend.exceptions.ingredient.IngredientNotFoundException;
 import com.myrecipewhisper.backend.mappers.IngredientMapper;
 import com.myrecipewhisper.backend.repositories.IngredientRepository;
 import com.myrecipewhisper.backend.validators.IngredientValidator;
@@ -66,7 +67,7 @@ public class IngredientService {
 
         if (!ingredientRepository.existsById(id)) {
             log.error("Ingredient deletion failed: ID {} not found", id);
-            throw new RuntimeException("Ingredient not found");
+            throw new IngredientNotFoundException(id);
         }
 
         ingredientRepository.deleteById(id);

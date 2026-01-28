@@ -1,4 +1,4 @@
-package com.myrecipewhisper.backend.exceptions;
+package com.myrecipewhisper.backend.exceptions.handlers;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import com.myrecipewhisper.backend.exceptions.EmailAlreadyUsedException;
+import com.myrecipewhisper.backend.exceptions.RessourceNotFoundException;
+import com.myrecipewhisper.backend.exceptions.UsernameAlreadyUsedException;
+import com.myrecipewhisper.backend.exceptions.ingredient.IngredientAlreadyExistsException;
+import com.myrecipewhisper.backend.exceptions.ingredient.IngredientNotFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -76,6 +82,26 @@ public class GlobalExceptionHandler {
                 .forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse("Validation Failed", errors.toString()));
+    }
+
+    /**
+     * Handle Ingredient Already Exists Exception
+     * Returns a 409 Conflict status with error details
+     */
+    @ExceptionHandler(IngredientAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleIngredientAlreadyExists(IngredientAlreadyExistsException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new ErrorResponse("Ingredient Already Exists", ex.getMessage()));
+    }
+
+    /**
+     * Handle Ingredient Not Found Exception
+     * Returns a 404 Not Found status with error details
+     */
+    @ExceptionHandler(IngredientNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleIngredientNotFound(IngredientNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponse("Ingredient Not Found", ex.getMessage()));
     }
 
 }

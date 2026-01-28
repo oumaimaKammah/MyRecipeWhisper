@@ -1,4 +1,4 @@
-package com.myrecipewhisper.backend.exceptions;
+package com.myrecipewhisper.backend.exceptions.handlers;
 
 import java.util.List;
 

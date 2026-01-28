@@ -2,6 +2,8 @@ package com.myrecipewhisper.backend.validators;
 
 import com.myrecipewhisper.backend.dtos.ingredient.CreateIngredientDTO;
 import com.myrecipewhisper.backend.dtos.ingredient.UpdateIngredientDTO;
+import com.myrecipewhisper.backend.exceptions.ingredient.IngredientAlreadyExistsException;
+import com.myrecipewhisper.backend.exceptions.ingredient.IngredientNotFoundException;
 import com.myrecipewhisper.backend.repositories.IngredientRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +24,7 @@ public class IngredientValidator {
         ingredientRepository.findByNameIgnoreCase(dto.name())
                 .ifPresent(i -> {
                     log.warn("Validation failed: ingredient '{}' already exists", dto.name());
-                    throw new RuntimeException("Ingredient already exists");
+                    throw new IngredientAlreadyExistsException(dto.name());
                 });
     }
 
@@ -31,14 +33,14 @@ public class IngredientValidator {
 
         if (!ingredientRepository.existsById(id)) {
             log.error("Validation failed: ingredient ID {} not found", id);
-            throw new RuntimeException("Ingredient not found");
+            throw new IngredientNotFoundException(id);
         }
 
         ingredientRepository.findByNameIgnoreCase(dto.name())
                 .ifPresent(existing -> {
                     if (!existing.getId().equals(id)) {
                         log.warn("Validation failed: ingredient '{}' already exists", dto.name());
-                        throw new RuntimeException("Ingredient already exists");
+                        throw new IngredientAlreadyExistsException(dto.name());
                     }
                 });
     }
