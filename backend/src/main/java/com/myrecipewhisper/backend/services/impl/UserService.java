@@ -63,10 +63,9 @@ public class UserService {
 
         User user = getUserById(userId);
         UserMapper.updateUserFromDTO(user, dto);
-        var saved = userRepository.save(user);
-        log.info("User with id {} updated successfully", saved.getId());
+        log.info("User with id {} updated successfully", user.getId());
 
-        return saved;
+        return user;
     }
 
     @Transactional
