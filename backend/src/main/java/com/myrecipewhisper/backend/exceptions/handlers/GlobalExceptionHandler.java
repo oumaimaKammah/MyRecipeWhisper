@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.myrecipewhisper.backend.api.ApiResponse;
 import com.myrecipewhisper.backend.exceptions.EmailAlreadyUsedException;
 import com.myrecipewhisper.backend.exceptions.RessourceNotFoundException;
 import com.myrecipewhisper.backend.exceptions.UsernameAlreadyUsedException;
@@ -24,9 +25,9 @@ public class GlobalExceptionHandler {
      */
 
     @ExceptionHandler(RessourceNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handelNotFound(RessourceNotFoundException ex) {
+    public ResponseEntity<ApiResponse<Void>> handelNotFound(RessourceNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(new ErrorResponse("Resource Not Found", ex.getMessage()));
+                .body(new ApiResponse<>(null, ex.getMessage()));
     }
 
     /**
@@ -35,9 +36,9 @@ public class GlobalExceptionHandler {
      */
 
     @ExceptionHandler(EmailAlreadyUsedException.class)
-    public ResponseEntity<ErrorResponse> handleEmailAlreadyUsed(EmailAlreadyUsedException ex) {
+    public ResponseEntity<ApiResponse<Void>> handleEmailAlreadyUsed(EmailAlreadyUsedException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
-                .body(new ErrorResponse("Email Already Used", ex.getMessage()));
+                .body(new ApiResponse<>(null, ex.getMessage()));
     }
 
     /**
@@ -46,9 +47,9 @@ public class GlobalExceptionHandler {
      */
 
     @ExceptionHandler(UsernameAlreadyUsedException.class)
-    public ResponseEntity<ErrorResponse> handleUsernameAlreadyUsed(UsernameAlreadyUsedException ex) {
+    public ResponseEntity<ApiResponse<Void>> handleUsernameAlreadyUsed(UsernameAlreadyUsedException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
-                .body(new ErrorResponse("Username Already Used", ex.getMessage()));
+                .body(new ApiResponse<>(null, ex.getMessage()));
     }
 
     /**
@@ -56,8 +57,8 @@ public class GlobalExceptionHandler {
      * Returns a 400 Bad Request status with error details
      */
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("Bad Request", ex.getMessage()));
+    public ResponseEntity<ApiResponse<Void>> handleIllegalArgument(IllegalArgumentException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>(null, ex.getMessage()));
     }
 
     /**
@@ -66,9 +67,9 @@ public class GlobalExceptionHandler {
      * Error.
      */
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGeneralException(Exception ex) {
+    public ResponseEntity<ApiResponse<Void>> handleGeneralException(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ErrorResponse("Internal Server Error", "An unexpected error occurred."));
+                .body(new ApiResponse<>(null, ex.getMessage()));
     }
 
     /**
@@ -89,9 +90,9 @@ public class GlobalExceptionHandler {
      * Returns a 409 Conflict status with error details
      */
     @ExceptionHandler(IngredientAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponse> handleIngredientAlreadyExists(IngredientAlreadyExistsException ex) {
+    public ResponseEntity<ApiResponse<Void>> handleIngredientAlreadyExists(IngredientAlreadyExistsException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
-                .body(new ErrorResponse("Ingredient Already Exists", ex.getMessage()));
+                .body(new ApiResponse<>(null, ex.getMessage()));
     }
 
     /**
@@ -99,9 +100,9 @@ public class GlobalExceptionHandler {
      * Returns a 404 Not Found status with error details
      */
     @ExceptionHandler(IngredientNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleIngredientNotFound(IngredientNotFoundException ex) {
+    public ResponseEntity<ApiResponse<Void>> handleIngredientNotFound(IngredientNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(new ErrorResponse("Ingredient Not Found", ex.getMessage()));
+                .body(new ApiResponse<>(null, ex.getMessage()));
     }
 
 }
