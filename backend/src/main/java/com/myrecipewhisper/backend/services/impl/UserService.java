@@ -27,11 +27,13 @@ public class UserService {
         this.userValidator = userValidator;
     }
 
+    @Transactional(readOnly = true)
     public List<User> getAllUsers() {
         log.info("Fetching all users from the database");
         return userRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public User getUserById(Integer userId) {
         log.info("Fetching user with id: {}", userId);
         return userRepository.findById(userId)
