@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import com.myrecipewhisper.backend.dtos.user.CreateUserDTO;
 import com.myrecipewhisper.backend.dtos.user.UpdateUserDTO;
 import com.myrecipewhisper.backend.entities.User;
-import com.myrecipewhisper.backend.exceptions.RessourceNotFoundException;
+import com.myrecipewhisper.backend.exceptions.user.UserNotFoundException;
 import com.myrecipewhisper.backend.mappers.UserMapper;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public class UserService {
     public User getUserById(Integer userId) {
         log.info("Fetching user with id: {}", userId);
         return userRepository.findById(userId)
-                .orElseThrow(() -> new RessourceNotFoundException("User not found with id: " + userId));
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
     }
 
     @Transactional
