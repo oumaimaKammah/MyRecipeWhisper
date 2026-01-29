@@ -19,10 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import com.myrecipewhisper.backend.api.ResponseFactory;
 import com.myrecipewhisper.backend.dtos.user.CreateUserDTO;
 import com.myrecipewhisper.backend.dtos.user.UpdateUserDTO;
-import com.myrecipewhisper.backend.dtos.user.UserDTO;
 import com.myrecipewhisper.backend.mappers.UserMapper;
-
-import java.util.List;
 
 @Slf4j
 @RestController
