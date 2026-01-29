@@ -30,11 +30,11 @@ public class UserValidator {
     public void validateCreate(String email, String username) {
 
         if (!isEmailUnique(email)) {
-            log.error("Email already in use: {}", email);
+            log.warn("Email already in use: {}", email);
             throw new EmailAlreadyUsedException("Email already in use: " + email);
         }
         if (!isUsernameUnique(username)) {
-            log.error("Username already in use: {}", username);
+            log.warn("Username already in use: {}", username);
             throw new UsernameAlreadyUsedException("Username already in use: " + username);
         }
 
