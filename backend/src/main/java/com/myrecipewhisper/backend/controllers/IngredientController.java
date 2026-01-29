@@ -37,6 +37,14 @@ public class IngredientController {
         return ResponseFactory.ok(response);
     }
 
+    @GetMapping("/{id}")
+    public Object getById(@PathVariable Integer id) {
+        log.info("API CALL: GET /api/ingredients/{} — Fetching ingredient by ID", id);
+        var response = ingredientService.gIngredientResponseDTOetById(id);
+        log.info("API RESPONSE: Ingredient {} returned", id);
+        return ResponseFactory.ok(response);
+    }
+
     @PutMapping("/{id}")
     public Object update(
             @PathVariable Integer id,
