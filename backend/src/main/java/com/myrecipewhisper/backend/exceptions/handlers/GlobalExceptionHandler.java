@@ -13,6 +13,8 @@ import com.myrecipewhisper.backend.api.ApiResponse;
 import com.myrecipewhisper.backend.exceptions.EmailAlreadyUsedException;
 import com.myrecipewhisper.backend.exceptions.RessourceNotFoundException;
 import com.myrecipewhisper.backend.exceptions.UsernameAlreadyUsedException;
+import com.myrecipewhisper.backend.exceptions.cuisine.CuisineAlreadyExistsException;
+import com.myrecipewhisper.backend.exceptions.cuisine.CuisineNotFoundException;
 import com.myrecipewhisper.backend.exceptions.ingredient.IngredientAlreadyExistsException;
 import com.myrecipewhisper.backend.exceptions.ingredient.IngredientNotFoundException;
 
@@ -101,6 +103,26 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(IngredientNotFoundException.class)
     public ResponseEntity<ApiResponse<Void>> handleIngredientNotFound(IngredientNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ApiResponse<>(null, ex.getMessage()));
+    }
+
+    /**
+     * Handle Cuisine Already Exists Exception
+     * Returns a 409 Conflict status with error details
+     */
+    @ExceptionHandler(CuisineAlreadyExistsException.class)
+    public ResponseEntity<ApiResponse<Void>> handleCuisineAlreadyExists(CuisineAlreadyExistsException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new ApiResponse<>(null, ex.getMessage()));
+    }
+
+    /**
+     * Handle Cuisine Not Found Exception
+     * Returns a 404 Not Found status with error details
+     */
+    @ExceptionHandler(CuisineNotFoundException.class)
+    public ResponseEntity<ApiResponse<Void>> handleCuisineNotFound(CuisineNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(new ApiResponse<>(null, ex.getMessage()));
     }
