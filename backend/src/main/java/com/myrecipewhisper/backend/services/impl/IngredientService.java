@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class IngredientService {
     private final IngredientMapper ingredientMapper;
     private final IngredientValidator ingredientValidator;
 
+    @Transactional
     public IngredientResponseDTO create(CreateIngredientDTO dto) {
         log.info("Creating new ingredient with name: {}", dto.name());
 
@@ -37,6 +39,7 @@ public class IngredientService {
         return ingredientMapper.toDTO(ingredient);
     }
 
+    @Transactional(readOnly = true)
     public List<IngredientResponseDTO> getAll() {
         log.debug("Fetching all ingredients");
 
@@ -49,6 +52,21 @@ public class IngredientService {
         return ingredients;
     }
 
+    @Transactional(readOnly = true)
+    public IngredientResponseDTO gIngredientResponseDTOetById(Integer id) {
+        log.info("Fetching ingredient with id {}", id);
+        var ingredient = ingredientRepository.getIngredientById(id)
+                .orElseThrow(() -> {
+                    log.error("Ingredient with id {} not found", id);
+                    return new IngredientNotFoundException(id);
+
+                });
+        log.info("Ingredient with id {} fetched successfully", id);
+        var dto = ingredientMapper.toDTO(ingredient);
+        return dto;
+    }
+
+    @Transactional
     public IngredientResponseDTO update(Integer id, UpdateIngredientDTO dto) {
         log.info("Updating ingredient with ID: {}", id);
 
@@ -56,12 +74,11 @@ public class IngredientService {
 
         Ingredient ingredient = ingredientRepository.findById(id).orElseThrow();
         ingredient.setName(dto.name());
-        ingredientRepository.save(ingredient);
-
         log.info("Ingredient with ID {} updated successfully", id);
         return ingredientMapper.toDTO(ingredient);
     }
 
+    @Transactional
     public void delete(Integer id) {
         log.info("Deleting ingredient with ID: {}", id);
 
