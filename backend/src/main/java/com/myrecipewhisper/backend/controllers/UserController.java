@@ -14,7 +14,9 @@ import org.springframework.http.HttpStatus;
 import com.myrecipewhisper.backend.services.impl.UserService;
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
+import com.myrecipewhisper.backend.api.ResponseFactory;
 import com.myrecipewhisper.backend.dtos.user.CreateUserDTO;
 import com.myrecipewhisper.backend.dtos.user.UpdateUserDTO;
 import com.myrecipewhisper.backend.dtos.user.UserDTO;
@@ -22,6 +24,7 @@ import com.myrecipewhisper.backend.mappers.UserMapper;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -33,36 +36,50 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserDTO> getAllUsers() {
-        return userService.getAllUsers()
+    public Object getAllUsers() {
+        log.info("API CALL: GET /api/users --Fetching all users");
+        var response = userService.getAllUsers()
                 .stream()
                 .map(UserMapper::toUserDTO)
                 .toList();
+        log.info("API RESPONSE: {} users fetched successfully", response.size());
+        return ResponseFactory.ok(response);
     }
 
     @GetMapping("/{id}")
-    public UserDTO getUserById(@PathVariable Integer id) {
+    public Object getUserById(@PathVariable Integer id) {
+        log.info("API CALL: GET /api/users/{} --Fetching user", id);
         var user = userService.getUserById(id);
-        return UserMapper.toUserDTO(user);
+        log.info("API RESPONSE: User {} fetched successfully", id);
+        var response = UserMapper.toUserDTO(user);
+        return ResponseFactory.ok(response);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDTO createUser(@Valid @RequestBody CreateUserDTO dto) {
+    public Object createUser(@Valid @RequestBody CreateUserDTO dto) {
+        log.info("API CALL: POST /api/users --Creating user");
         var user = userService.createUser(dto);
-        return UserMapper.toUserDTO(user);
+        log.info("API RESPONSE: User created with ID {}", user.getId());
+        var response = UserMapper.toUserDTO(user);
+        return ResponseFactory.created(response);
     }
 
     @PutMapping("/{id}")
-    public UserDTO updateUser(@PathVariable Integer id, @Valid @RequestBody UpdateUserDTO dto) {
+    public Object updateUser(@PathVariable Integer id, @Valid @RequestBody UpdateUserDTO dto) {
+        log.info("API CALL: PUT /api/users/{} --Updating user", id);
         var user = userService.updateUser(id, dto);
-        return UserMapper.toUserDTO(user);
+        log.info("API RESPONSE: User {} updated successfully", id);
+        var response = UserMapper.toUserDTO(user);
+        return ResponseFactory.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(@PathVariable Integer id) {
+    public Object deleteUser(@PathVariable Integer id) {
+        log.info("API CALL: DELETE /api/users/{} --Deleting user", id);
         userService.deleteUserById(id);
+        log.info("API RESPONSE: User {} deleted successfully", id);
+        return ResponseFactory.noContent();
     }
 
 }
