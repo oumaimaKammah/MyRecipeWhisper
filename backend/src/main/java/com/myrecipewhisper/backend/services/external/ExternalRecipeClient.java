@@ -1,45 +1,32 @@
 package com.myrecipewhisper.backend.services.external;
 
+import com.myrecipewhisper.backend.configs.SpoonacularProperties;
+import com.myrecipewhisper.backend.dtos.recipe.ExternalRecipeResponseDTO;
+
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.myrecipewhisper.backend.dtos.recipe.ExternalRecipeResponseDTO;
-
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class ExternalRecipeClient {
 
-    private RestTemplate restTemplate;
-    private String apiKey;
-    private String searchEndpoint;
-    private int defaultNumber;
-    private boolean addRecipeInformation;
-
-    public ExternalRecipeClient(
-            RestTemplate restTemplate,
-            @Value("${spoonacular.api.key}") String apiKey,
-            @Value("${spoonacular.endpoints.search}") String searchEndpoint,
-            @Value("${spoonacular.defaults.number}") int defaultNumber,
-            @Value("${spoonacular.defaults.addRecipeInformation}") boolean addRecipeInformation) {
-
-        this.restTemplate = restTemplate;
-        this.apiKey = apiKey;
-        this.searchEndpoint = searchEndpoint;
-        this.defaultNumber = defaultNumber;
-        this.addRecipeInformation = addRecipeInformation;
-    }
+    private final RestTemplate restTemplate;
+    private final SpoonacularProperties properties;
 
     public ExternalRecipeResponseDTO searchRecipes(String ingredients, String cuisineName) {
 
-        String uri = UriComponentsBuilder.fromHttpUrl(searchEndpoint)
-                .queryParam("apiKey", apiKey)
+        String uri = UriComponentsBuilder
+                .fromHttpUrl(properties.getEndpoints().getSearch())
+                .queryParam("apiKey", properties.getApi().getKey())
                 .queryParam("includeIngredients", ingredients)
                 .queryParam("cuisine", cuisineName)
-                .queryParam("number", defaultNumber)
-                .queryParam("addRecipeInformation", addRecipeInformation)
+                .queryParam("number", properties.getDefaults().getNumber())
+                .queryParam("addRecipeInformation", properties.getDefaults().isAddRecipeInformation())
                 .toUriString();
 
         log.info("Calling Spoonacular API: {}", uri);
