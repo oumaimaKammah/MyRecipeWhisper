@@ -17,3 +17,14 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
     show-sql: true
+  config:
+    import: optional:file:.env
+
+spoonacular:
+  api:
+    key: ${SPOONACULAR_API_KEY}
+  endpoints:
+    search: "https://api.spoonacular.com/recipes/complexSearch"
+  defaults:
+      number: 20
+      addRecipeInformation: true
