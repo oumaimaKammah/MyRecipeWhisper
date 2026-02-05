@@ -1,6 +1,8 @@
 server:
   port: 8080
 spring:
+  config:
+    import: optional:file:../config/env.properties
   application:
     name: MyRecipeWhisper-Backend
   datasource:
@@ -15,16 +17,16 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
-        format_sql: true
+        "[format_sql]": true
     show-sql: true
-  config:
-    import: optional:file:.env
+
 
 spoonacular:
   api:
-    key: ${SPOONACULAR_API_KEY}
+    key: ${RAPIDAPI_KEY} 
+    host: ${RAPIDAPI_HOST}
   endpoints:
-    search: "https://api.spoonacular.com/recipes/complexSearch"
+    search: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch"
   defaults:
       number: 20
       addRecipeInformation: true
