@@ -13,11 +13,11 @@ public class RecipeMapper {
             return null;
         }
         return new RecipeDTO(
+                externalRecipeItemDTO.id(),
                 externalRecipeItemDTO.title(),
                 externalRecipeItemDTO.image(),
-                externalRecipeItemDTO.spoonacularScore(), // rating
-                externalRecipeItemDTO.dishTypes(), // tags
-                externalRecipeItemDTO.sourceUrl());
+                externalRecipeItemDTO.readyInMinutes(),
+                externalRecipeItemDTO.servings());
     }
 
 }
