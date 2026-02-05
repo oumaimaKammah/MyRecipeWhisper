@@ -4,45 +4,61 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.myrecipewhisper.backend.dtos.recipe.ExternalRecipeItemDTO;
+import com.myrecipewhisper.backend.dtos.recipe.ExternalRecipeResponseDTO;
 import com.myrecipewhisper.backend.dtos.recipe.RecipeDTO;
 import com.myrecipewhisper.backend.dtos.recipe.RecipeSearchRequestDTO;
-import com.myrecipewhisper.backend.mappers.RecipeMapper;
 import com.myrecipewhisper.backend.services.external.ExternalRecipeClient;
-import com.myrecipewhisper.backend.validators.CuisineValidator;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class RecipeService {
-    private final CuisineValidator cuisineValidator;
-    private final ExternalRecipeClient externalRecipeClient;
-    private final RecipeMapper recipeMapper;
 
-    public RecipeService(CuisineValidator cuisineValidator,
-            ExternalRecipeClient externalRecipeClient,
-            RecipeMapper recipeMapper) {
-        this.cuisineValidator = cuisineValidator;
-        this.externalRecipeClient = externalRecipeClient;
-        this.recipeMapper = recipeMapper;
-    }
+    private final ExternalRecipeClient externalRecipeClient;
 
     public List<RecipeDTO> searchRecipes(RecipeSearchRequestDTO dto) {
+
         log.info("Searching recipes for ingredients = {} and cuisineId = {}", dto.ingredients(), dto.cuisineId());
-        var cuisine = cuisineValidator.validateCuisineExists(dto.cuisineId());
-        String ingredients = String.join(",", dto.ingredients());
-        var externalResponse = externalRecipeClient.searchRecipes(ingredients, cuisine.getCuisineName());
+
+        String cuisineName = dto.cuisineId() != null ? mapCuisineId(dto.cuisineId()) : null;
+
+        ExternalRecipeResponseDTO externalResponse = externalRecipeClient.searchRecipes(dto.ingredients(), cuisineName);
+
         if (externalResponse == null || externalResponse.results() == null) {
             log.warn("No recipes found from external API");
             return List.of();
-
         }
-        var recipes = externalResponse.results().stream()
-                .map(recipeMapper::toDTO)
-                .toList();
-        log.info("Found {} recipes from external API", recipes.size());
-        return recipes;
 
+        return externalResponse.results().stream()
+                .map(r -> new ExternalRecipeItemDTO(
+                        r.id(),
+                        r.title(),
+                        r.image(),
+                        r.readyInMinutes(),
+                        r.servings(),
+                        r.dishTypes(),
+                        r.sourceUrl()))
+                .map(item -> new RecipeDTO(
+                        item.id(),
+                        item.title(),
+                        item.image(),
+                        item.readyInMinutes(),
+                        item.servings()))
+                .toList();
     }
 
+    private String mapCuisineId(Integer id) {
+        return switch (id) {
+            case 1 -> "italian";
+            case 2 -> "french";
+            case 3 -> "mexican";
+            case 4 -> "japanese";
+            case 5 -> "indian";
+            default -> null;
+        };
+    }
 }
