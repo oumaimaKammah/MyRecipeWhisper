@@ -3,6 +3,9 @@ package com.myrecipewhisper.backend.entities;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.myrecipewhisper.backend.enums.AuthProvider;
+import com.myrecipewhisper.backend.enums.Role;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,11 +34,13 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
-    private String role = "USER";
+    private Role role = Role.USER;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "provider", nullable = false)
-    private String provider = "LOCAL";
+    private AuthProvider provider = AuthProvider.LOCAL;
 
     @Column(name = "enabled_account", nullable = false)
     private Boolean enabledAccount = false;
