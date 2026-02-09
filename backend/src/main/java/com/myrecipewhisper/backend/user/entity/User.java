@@ -1,4 +1,4 @@
-package com.myrecipewhisper.backend.entities;
+package com.myrecipewhisper.backend.user.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

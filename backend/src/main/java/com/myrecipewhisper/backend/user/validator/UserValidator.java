@@ -1,12 +1,12 @@
-package com.myrecipewhisper.backend.validators;
+package com.myrecipewhisper.backend.user.validator;
 
 import org.springframework.stereotype.Component;
 
-import com.myrecipewhisper.backend.entities.User;
 import com.myrecipewhisper.backend.exceptions.user.EmailAlreadyUsedException;
 import com.myrecipewhisper.backend.exceptions.user.UserNotFoundException;
 import com.myrecipewhisper.backend.exceptions.user.UsernameAlreadyUsedException;
-import com.myrecipewhisper.backend.repositories.UserRepository;
+import com.myrecipewhisper.backend.user.entity.User;
+import com.myrecipewhisper.backend.user.repository.UserRepository;
 
 import lombok.extern.slf4j.Slf4j;
 

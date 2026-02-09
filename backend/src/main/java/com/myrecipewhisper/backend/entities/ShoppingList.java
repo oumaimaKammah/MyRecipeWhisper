@@ -2,6 +2,8 @@ package com.myrecipewhisper.backend.entities;
 
 import java.time.LocalDateTime;
 
+import com.myrecipewhisper.backend.user.entity.User;
+
 import jakarta.persistence.*;
 import lombok.*;
 

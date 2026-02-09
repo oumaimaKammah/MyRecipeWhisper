@@ -1,15 +1,15 @@
-package com.myrecipewhisper.backend.services.impl;
+package com.myrecipewhisper.backend.user.service.impl;
 
-import com.myrecipewhisper.backend.repositories.UserRepository;
-import com.myrecipewhisper.backend.validators.UserValidator;
+import com.myrecipewhisper.backend.user.dto.CreateUserDTO;
+import com.myrecipewhisper.backend.user.dto.UpdateUserDTO;
+import com.myrecipewhisper.backend.user.entity.User;
+import com.myrecipewhisper.backend.user.mapper.UserMapper;
+import com.myrecipewhisper.backend.user.repository.UserRepository;
+import com.myrecipewhisper.backend.user.validator.UserValidator;
 
 import lombok.extern.slf4j.Slf4j;
 
-import com.myrecipewhisper.backend.dtos.user.CreateUserDTO;
-import com.myrecipewhisper.backend.dtos.user.UpdateUserDTO;
-import com.myrecipewhisper.backend.entities.User;
 import com.myrecipewhisper.backend.exceptions.user.UserNotFoundException;
-import com.myrecipewhisper.backend.mappers.UserMapper;
 
 import java.util.List;
 

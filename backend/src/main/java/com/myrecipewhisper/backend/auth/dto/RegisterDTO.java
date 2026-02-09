@@ -1,4 +1,4 @@
-package com.myrecipewhisper.backend.dtos.user;
+package com.myrecipewhisper.backend.auth.dto;
 
 import java.time.LocalDate;
 
@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-public record CreateUserDTO(
+public record RegisterDTO(
         @NotBlank(message = "Username cannot be empty") String username,
 
         @NotBlank(message = "Email cannot be empty") @Email(message = "Email format is invalid") String email,

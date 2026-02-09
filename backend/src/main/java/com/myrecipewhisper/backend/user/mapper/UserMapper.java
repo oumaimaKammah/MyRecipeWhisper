@@ -1,9 +1,9 @@
-package com.myrecipewhisper.backend.mappers;
+package com.myrecipewhisper.backend.user.mapper;
 
-import com.myrecipewhisper.backend.dtos.user.CreateUserDTO;
-import com.myrecipewhisper.backend.dtos.user.UpdateUserDTO;
-import com.myrecipewhisper.backend.dtos.user.UserDTO;
-import com.myrecipewhisper.backend.entities.User;
+import com.myrecipewhisper.backend.user.dto.CreateUserDTO;
+import com.myrecipewhisper.backend.user.dto.UpdateUserDTO;
+import com.myrecipewhisper.backend.user.dto.UserDTO;
+import com.myrecipewhisper.backend.user.entity.User;
 
 public class UserMapper {
 

@@ -1,4 +1,4 @@
-package com.myrecipewhisper.backend.dtos;
+package com.myrecipewhisper.backend.user.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
