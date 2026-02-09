@@ -26,7 +26,6 @@ public class UserMapper {
         var user = new User();
         user.setUsername(userDTO.username());
         user.setEmail(userDTO.email());
-        user.setPassword(userDTO.password());
         user.setBirthday(userDTO.birthday());
         return user;
     }
