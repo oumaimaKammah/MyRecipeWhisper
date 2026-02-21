@@ -13,5 +13,25 @@
     "name": "spoonacular.api.key",
     "type": "java.lang.String",
     "description": "A description for 'spoonacular.api.key'"
+  },
+  {
+    "name": "spoonacular.defaults.number",
+    "type": "java.lang.String",
+    "description": "A description for 'spoonacular.defaults.number'"
+  },
+  {
+    "name": "spoonacular.endpoints.search",
+    "type": "java.lang.String",
+    "description": "A description for 'spoonacular.endpoints.search'"
+  },
+  {
+    "name": "spoonacular.api.host",
+    "type": "java.lang.String",
+    "description": "A description for 'spoonacular.api.host'"
+  },
+  {
+    "name": "spoonacular.defaults.addRecipeInformation",
+    "type": "java.lang.String",
+    "description": "A description for 'spoonacular.defaults.addRecipeInformation'"
   }
 ]}
