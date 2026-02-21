@@ -30,3 +30,7 @@ spoonacular:
   defaults:
       number: 20
       addRecipeInformation: true
+security:
+  jwt:
+    secret: ${JWT_SECRET_KEY}
+    expiration: 3600000 # 1 hour in milliseconds
