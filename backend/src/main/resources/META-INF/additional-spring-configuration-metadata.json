@@ -8,5 +8,10 @@
     "name": "security.jwt.expiration",
     "type": "java.lang.String",
     "description": "A description for 'security.jwt.expiration'"
+  },
+  {
+    "name": "spoonacular.api.key",
+    "type": "java.lang.String",
+    "description": "A description for 'spoonacular.api.key'"
   }
 ]}
