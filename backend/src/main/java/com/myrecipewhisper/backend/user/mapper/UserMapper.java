@@ -16,7 +16,8 @@ public class UserMapper {
                 user.getUsername(),
                 user.getEmail(),
                 user.getBirthday(),
-                user.getRegisteredAt());
+                user.getRegisteredAt(),
+                user.getRole().name());
     }
 
     public static User toUserEntity(CreateUserDTO userDTO) {
