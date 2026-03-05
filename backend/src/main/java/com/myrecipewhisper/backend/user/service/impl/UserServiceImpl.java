@@ -93,4 +93,12 @@ public class UserServiceImpl implements UserService {
 
         log.info("User {} deleted successfully", userId);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public User findByEmail(String email) {
+        log.info("Finding user by email: {}", email);
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User not found with email: " + email));
+    }
 }
