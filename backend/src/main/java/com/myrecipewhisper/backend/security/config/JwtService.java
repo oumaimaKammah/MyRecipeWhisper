@@ -19,7 +19,7 @@ public class JwtService {
     @Value("${security.jwt.secret}")
     private String secretKey;
 
-    @Value("${security.jwt.expiration-ms:86400000}")
+    @Value("${security.jwt.expiration-ms}")
     private long jwtExpirationMs;
 
     private Key getSigningKey() {
@@ -33,7 +33,7 @@ public class JwtService {
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
-                .addClaims(extraClaims)
+                .setClaims(extraClaims)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
