@@ -2,7 +2,7 @@ server:
   port: 8080
 spring:
   config:
-    import: optional:file:../config/env.properties
+    import: optional:file:../config/.env.properties
   application:
     name: MyRecipeWhisper-Backend
   datasource:
@@ -23,8 +23,8 @@ spring:
 
 spoonacular:
   api:
-    key: ${RAPIDAPI_KEY} 
-    host: ${RAPIDAPI_HOST}
+    key: "d751981816msh691761897af6598p181fbbjsnec9336587f4c"
+    host: "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
   endpoints:
     search: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch"
   defaults:
