@@ -1,14 +1,14 @@
-package com.myrecipewhisper.backend.services.impl;
+package com.myrecipewhisper.backend.recipe.service.impl;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.myrecipewhisper.backend.dtos.recipe.ExternalRecipeItemDTO;
-import com.myrecipewhisper.backend.dtos.recipe.ExternalRecipeResponseDTO;
-import com.myrecipewhisper.backend.dtos.recipe.RecipeDTO;
-import com.myrecipewhisper.backend.dtos.recipe.RecipeSearchRequestDTO;
-import com.myrecipewhisper.backend.services.external.ExternalRecipeClient;
+import com.myrecipewhisper.backend.recipe.dto.ExternalRecipeItemDTO;
+import com.myrecipewhisper.backend.recipe.dto.ExternalRecipeResponseDTO;
+import com.myrecipewhisper.backend.recipe.dto.RecipeDTO;
+import com.myrecipewhisper.backend.recipe.dto.RecipeSearchRequestDTO;
+import com.myrecipewhisper.backend.recipe.service.external.ExternalRecipeClient;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

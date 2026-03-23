@@ -1,9 +1,9 @@
-package com.myrecipewhisper.backend.mappers;
+package com.myrecipewhisper.backend.recipe.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.myrecipewhisper.backend.dtos.recipe.ExternalRecipeItemDTO;
-import com.myrecipewhisper.backend.dtos.recipe.RecipeDTO;
+import com.myrecipewhisper.backend.recipe.dto.ExternalRecipeItemDTO;
+import com.myrecipewhisper.backend.recipe.dto.RecipeDTO;
 
 @Component
 public class RecipeMapper {

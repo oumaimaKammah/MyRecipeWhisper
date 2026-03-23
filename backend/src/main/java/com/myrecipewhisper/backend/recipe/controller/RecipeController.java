@@ -1,11 +1,11 @@
-package com.myrecipewhisper.backend.controllers;
+package com.myrecipewhisper.backend.recipe.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myrecipewhisper.backend.dtos.recipe.RecipeDTO;
-import com.myrecipewhisper.backend.dtos.recipe.RecipeSearchRequestDTO;
-import com.myrecipewhisper.backend.services.impl.RecipeService;
+import com.myrecipewhisper.backend.recipe.dto.RecipeDTO;
+import com.myrecipewhisper.backend.recipe.dto.RecipeSearchRequestDTO;
+import com.myrecipewhisper.backend.recipe.service.impl.RecipeService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

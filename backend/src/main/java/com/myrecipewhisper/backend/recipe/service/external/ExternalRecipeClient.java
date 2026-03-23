@@ -1,4 +1,4 @@
-package com.myrecipewhisper.backend.services.external;
+package com.myrecipewhisper.backend.recipe.service.external;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.myrecipewhisper.backend.configs.SpoonacularProperties;
-import com.myrecipewhisper.backend.dtos.recipe.ExternalRecipeResponseDTO;
+import com.myrecipewhisper.backend.recipe.dto.ExternalRecipeResponseDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
