@@ -1,4 +1,4 @@
-package com.myrecipewhisper.backend.exceptions.user;
+package com.myrecipewhisper.backend.common.exceptions.user;
 
 public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException(String message) {

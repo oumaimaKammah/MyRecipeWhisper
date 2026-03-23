@@ -1,6 +1,6 @@
 package com.myrecipewhisper.backend.user.service.impl;
 
-import com.myrecipewhisper.backend.exceptions.user.UserNotFoundException;
+import com.myrecipewhisper.backend.common.exceptions.user.UserNotFoundException;
 import com.myrecipewhisper.backend.user.dto.CreateUserDTO;
 import com.myrecipewhisper.backend.user.dto.UpdateUserDTO;
 import com.myrecipewhisper.backend.user.dto.UserDTO;

@@ -1,4 +1,4 @@
-package com.myrecipewhisper.backend.exceptions.ingredient;
+package com.myrecipewhisper.backend.common.exceptions.ingredient;
 
 public class IngredientAlreadyExistsException extends RuntimeException {
     public IngredientAlreadyExistsException(String name) {

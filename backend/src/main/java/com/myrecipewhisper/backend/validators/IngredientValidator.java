@@ -1,9 +1,9 @@
 package com.myrecipewhisper.backend.validators;
 
+import com.myrecipewhisper.backend.common.exceptions.ingredient.IngredientAlreadyExistsException;
+import com.myrecipewhisper.backend.common.exceptions.ingredient.IngredientNotFoundException;
 import com.myrecipewhisper.backend.dtos.ingredient.CreateIngredientDTO;
 import com.myrecipewhisper.backend.dtos.ingredient.UpdateIngredientDTO;
-import com.myrecipewhisper.backend.exceptions.ingredient.IngredientAlreadyExistsException;
-import com.myrecipewhisper.backend.exceptions.ingredient.IngredientNotFoundException;
 import com.myrecipewhisper.backend.repositories.IngredientRepository;
 
 import lombok.RequiredArgsConstructor;

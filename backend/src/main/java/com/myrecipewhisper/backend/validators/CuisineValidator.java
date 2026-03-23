@@ -5,9 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Component;
 
+import com.myrecipewhisper.backend.common.exceptions.cuisine.CuisineAlreadyExistsException;
+import com.myrecipewhisper.backend.common.exceptions.cuisine.CuisineNotFoundException;
 import com.myrecipewhisper.backend.entities.Cuisine;
-import com.myrecipewhisper.backend.exceptions.cuisine.CuisineAlreadyExistsException;
-import com.myrecipewhisper.backend.exceptions.cuisine.CuisineNotFoundException;
 import com.myrecipewhisper.backend.repositories.CuisineRepository;
 
 @Component

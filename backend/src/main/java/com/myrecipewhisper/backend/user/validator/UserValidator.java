@@ -2,9 +2,9 @@ package com.myrecipewhisper.backend.user.validator;
 
 import org.springframework.stereotype.Component;
 
-import com.myrecipewhisper.backend.exceptions.user.EmailAlreadyUsedException;
-import com.myrecipewhisper.backend.exceptions.user.UserNotFoundException;
-import com.myrecipewhisper.backend.exceptions.user.UsernameAlreadyUsedException;
+import com.myrecipewhisper.backend.common.exceptions.user.EmailAlreadyUsedException;
+import com.myrecipewhisper.backend.common.exceptions.user.UserNotFoundException;
+import com.myrecipewhisper.backend.common.exceptions.user.UsernameAlreadyUsedException;
 import com.myrecipewhisper.backend.user.entity.User;
 import com.myrecipewhisper.backend.user.repository.UserRepository;
 

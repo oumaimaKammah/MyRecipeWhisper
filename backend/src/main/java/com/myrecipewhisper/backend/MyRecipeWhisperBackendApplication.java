@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
-import com.myrecipewhisper.backend.configs.SpoonacularProperties;
+import com.myrecipewhisper.backend.common.configs.SpoonacularProperties;
 
 @SpringBootApplication
 @EnableConfigurationProperties(SpoonacularProperties.class)

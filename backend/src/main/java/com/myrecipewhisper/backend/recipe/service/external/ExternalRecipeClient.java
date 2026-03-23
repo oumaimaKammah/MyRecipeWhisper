@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.myrecipewhisper.backend.configs.SpoonacularProperties;
+import com.myrecipewhisper.backend.common.configs.SpoonacularProperties;
 import com.myrecipewhisper.backend.recipe.dto.ExternalRecipeResponseDTO;
 
 import lombok.RequiredArgsConstructor;

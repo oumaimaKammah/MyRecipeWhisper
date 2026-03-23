@@ -1,4 +1,4 @@
-package com.myrecipewhisper.backend.exceptions.ingredient;
+package com.myrecipewhisper.backend.common.exceptions.ingredient;
 
 public class IngredientNotFoundException extends RuntimeException {
     public IngredientNotFoundException(Integer id) {

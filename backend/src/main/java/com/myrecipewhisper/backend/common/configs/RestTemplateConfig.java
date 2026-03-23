@@ -1,4 +1,4 @@
-package com.myrecipewhisper.backend.configs;
+package com.myrecipewhisper.backend.common.configs;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;

@@ -1,13 +1,13 @@
-package com.myrecipewhisper.backend.exceptions.handlers;
+package com.myrecipewhisper.backend.common.exceptions.handlers;
 
 import com.myrecipewhisper.backend.api.ApiResponse;
-import com.myrecipewhisper.backend.exceptions.cuisine.CuisineAlreadyExistsException;
-import com.myrecipewhisper.backend.exceptions.cuisine.CuisineNotFoundException;
-import com.myrecipewhisper.backend.exceptions.ingredient.IngredientAlreadyExistsException;
-import com.myrecipewhisper.backend.exceptions.ingredient.IngredientNotFoundException;
-import com.myrecipewhisper.backend.exceptions.user.EmailAlreadyUsedException;
-import com.myrecipewhisper.backend.exceptions.user.UserNotFoundException;
-import com.myrecipewhisper.backend.exceptions.user.UsernameAlreadyUsedException;
+import com.myrecipewhisper.backend.common.exceptions.cuisine.CuisineAlreadyExistsException;
+import com.myrecipewhisper.backend.common.exceptions.cuisine.CuisineNotFoundException;
+import com.myrecipewhisper.backend.common.exceptions.ingredient.IngredientAlreadyExistsException;
+import com.myrecipewhisper.backend.common.exceptions.ingredient.IngredientNotFoundException;
+import com.myrecipewhisper.backend.common.exceptions.user.EmailAlreadyUsedException;
+import com.myrecipewhisper.backend.common.exceptions.user.UserNotFoundException;
+import com.myrecipewhisper.backend.common.exceptions.user.UsernameAlreadyUsedException;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
