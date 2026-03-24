@@ -17,7 +17,8 @@ public class RecipeMapper {
                 externalRecipeItemDTO.title(),
                 externalRecipeItemDTO.image(),
                 externalRecipeItemDTO.readyInMinutes(),
-                externalRecipeItemDTO.servings());
+                externalRecipeItemDTO.servings(),
+                externalRecipeItemDTO.isFavorite());
     }
 
 }

@@ -80,7 +80,8 @@ public class ExternalRecipeClient {
                     external.title(),
                     external.image(),
                     external.readyInMinutes(),
-                    external.servings());
+                    external.servings(),
+                    false);
 
         } catch (Exception e) {
             log.error("Error calling RapidAPI for recipe details: {}", e.getMessage());

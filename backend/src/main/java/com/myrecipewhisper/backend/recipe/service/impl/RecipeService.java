@@ -9,6 +9,7 @@ import com.myrecipewhisper.backend.recipe.dto.ExternalRecipeItemDTO;
 import com.myrecipewhisper.backend.recipe.dto.ExternalRecipeResponseDTO;
 import com.myrecipewhisper.backend.recipe.dto.RecipeDTO;
 import com.myrecipewhisper.backend.recipe.dto.RecipeSearchRequestDTO;
+import com.myrecipewhisper.backend.recipe.service.FavoriteRecipeService;
 import com.myrecipewhisper.backend.recipe.service.external.ExternalRecipeClient;
 
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 public class RecipeService {
 
     private final ExternalRecipeClient externalRecipeClient;
+    private final FavoriteRecipeService favoriteRecipeService;
 
     public List<RecipeDTO> searchRecipes(RecipeSearchRequestDTO dto) {
 
@@ -42,13 +44,13 @@ public class RecipeService {
                         r.readyInMinutes(),
                         r.servings(),
                         r.dishTypes(),
-                        r.sourceUrl()))
+                        r.sourceUrl(), false))
                 .map(item -> new RecipeDTO(
                         item.id(),
                         item.title(),
                         item.image(),
                         item.readyInMinutes(),
-                        item.servings()))
+                        item.servings(), false))
                 .toList();
     }
 
@@ -65,6 +67,22 @@ public class RecipeService {
 
     @Cacheable("recipeDetails")
     public RecipeDTO getRecipeDetails(Integer recipeId) {
-        return externalRecipeClient.getRecipeDetails(recipeId);
+
+        RecipeDTO externalRecipe = externalRecipeClient.getRecipeDetails(recipeId);
+
+        if (externalRecipe == null) {
+            return null;
+        }
+        boolean isFavorite = favoriteRecipeService.isFavorite(recipeId);
+        return new RecipeDTO(
+                externalRecipe.id(),
+                externalRecipe.title(),
+                externalRecipe.image(),
+                externalRecipe.readyInMinutes(),
+                externalRecipe.servings(),
+                isFavorite
+
+        );
     }
+
 }

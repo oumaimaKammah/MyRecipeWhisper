@@ -11,4 +11,6 @@ public interface FavoriteRecipeService {
 
     List<FavoriteRecipeDTO> getFavorites();
 
+    boolean isFavorite(Integer recipeId);
+
 }
