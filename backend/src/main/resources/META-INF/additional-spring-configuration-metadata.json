@@ -38,5 +38,15 @@
     "name": "security.jwt.expiration-ms",
     "type": "java.lang.String",
     "description": "A description for 'security.jwt.expiration-ms'"
+  },
+  {
+    "name": "spoonacular.endpoints.details",
+    "type": "java.lang.String",
+    "description": "A description for 'spoonacular.endpoints.details'"
+  }
+,{
+    "name": "spring.caffeine.spec",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.caffeine.spec'"
   }
 ]}

@@ -15,6 +15,7 @@ public record SpoonacularProperties(
         }
 
         public record Endpoints(
-                        String search) {
+                        String search,
+                        String details) {
         }
 }

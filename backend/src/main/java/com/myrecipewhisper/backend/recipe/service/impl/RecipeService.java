@@ -2,6 +2,7 @@ package com.myrecipewhisper.backend.recipe.service.impl;
 
 import java.util.List;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.myrecipewhisper.backend.recipe.dto.ExternalRecipeItemDTO;
@@ -60,5 +61,10 @@ public class RecipeService {
             case 5 -> "indian";
             default -> null;
         };
+    }
+
+    @Cacheable("recipeDetails")
+    public RecipeDTO getRecipeDetails(Integer recipeId) {
+        return externalRecipeClient.getRecipeDetails(recipeId);
     }
 }
