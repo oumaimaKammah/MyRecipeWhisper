@@ -1,6 +1,10 @@
 server:
   port: 8080
 spring:
+  cache:
+    type: caffeine
+  caffeine:
+    spec: maximumSize=1000,expireAfterWrite=1h
   config:
     import: optional:file:../config/.env.properties
   application:
@@ -27,6 +31,7 @@ spoonacular:
     host: "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
   endpoints:
     search: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch"
+    details: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/{id}/information"
   defaults:
       number: 20
       addRecipeInformation: true
