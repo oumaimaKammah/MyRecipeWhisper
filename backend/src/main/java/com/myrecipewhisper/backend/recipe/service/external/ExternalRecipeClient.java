@@ -10,7 +10,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.myrecipewhisper.backend.common.configs.SpoonacularProperties;
 import com.myrecipewhisper.backend.recipe.dto.ExternalRecipeItemDTO;
 import com.myrecipewhisper.backend.recipe.dto.ExternalRecipeResponseDTO;
-import com.myrecipewhisper.backend.recipe.dto.RecipeDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,70 +22,55 @@ public class ExternalRecipeClient {
     private final RestTemplate restTemplate;
     private final SpoonacularProperties properties;
 
-    public ExternalRecipeResponseDTO searchRecipes(List<String> ingredients, String cuisine) {
+    public ExternalRecipeResponseDTO searchRecipes(List<String> ingredients, String cuisine, String tags) {
         log.info("RAPIDAPI HOST LOADED = {}", properties.api().host());
 
         String url = UriComponentsBuilder
                 .fromHttpUrl(properties.endpoints().search())
                 .queryParam("includeIngredients", String.join(",", ingredients))
                 .queryParam("number", 20)
-                .queryParam("addRecipeInformation", true)
                 .queryParam("cuisine", cuisine)
+                .queryParam("tags", tags)
+                .queryParam("addRecipeInformation", true)
                 .toUriString();
 
         log.info("Calling RapidAPI: {}", url);
 
         HttpHeaders headers = getHeaders();
-
         HttpEntity<Void> entity = new HttpEntity<>(headers);
 
         try {
             return getResponse(url, entity, ExternalRecipeResponseDTO.class);
-
         } catch (Exception e) {
             log.error("Error calling RapidAPI: {}", e.getMessage());
             return null;
         }
     }
 
-    private <T> T getResponse(String url, HttpEntity<Void> entity, Class<T> responseType) {
-        ResponseEntity<T> response = restTemplate.exchange(url, HttpMethod.GET, entity, responseType);
-
-        return response.getBody();
-    }
-
-    public RecipeDTO getRecipeDetails(Integer recipeId) {
+    public ExternalRecipeItemDTO getRecipeDetails(Integer recipeId) {
         log.info("Fetching details for recipe ID: {}", recipeId);
 
         String url = UriComponentsBuilder
                 .fromHttpUrl(properties.endpoints().details())
                 .build(recipeId)
                 .toString();
+
         log.info("Calling RapidAPI details: {}", url);
 
         HttpHeaders headers = getHeaders();
-
         HttpEntity<Void> entity = new HttpEntity<>(headers);
 
         try {
-            ExternalRecipeItemDTO external = getResponse(url, entity, ExternalRecipeItemDTO.class);
-            if (external == null) {
-                log.warn("No details found for recipe {}", recipeId);
-                return null;
-            }
-
-            return new RecipeDTO(
-                    external.id(),
-                    external.title(),
-                    external.image(),
-                    external.readyInMinutes(),
-                    external.servings(),
-                    false);
-
+            return getResponse(url, entity, ExternalRecipeItemDTO.class);
         } catch (Exception e) {
             log.error("Error calling RapidAPI for recipe details: {}", e.getMessage());
             return null;
         }
+    }
+
+    private <T> T getResponse(String url, HttpEntity<Void> entity, Class<T> responseType) {
+        ResponseEntity<T> response = restTemplate.exchange(url, HttpMethod.GET, entity, responseType);
+        return response.getBody();
     }
 
     private HttpHeaders getHeaders() {

@@ -9,7 +9,6 @@ public record ExternalRecipeItemDTO(
                 Integer readyInMinutes,
                 Integer servings,
                 List<String> dishTypes,
-                String sourceUrl,
-                boolean isFavorite) {
-
+                List<String> diets,
+                List<String> occasions) {
 }

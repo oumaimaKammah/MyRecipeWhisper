@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.myrecipewhisper.backend.recipe.dto.FavoriteRecipeDTO;
 import com.myrecipewhisper.backend.recipe.dto.RecipeDTO;
 import com.myrecipewhisper.backend.recipe.entity.FavoriteRecipe;
-import com.myrecipewhisper.backend.recipe.mapper.FavoriteMapper;
+import com.myrecipewhisper.backend.recipe.mapper.RecipeMapper;
 import com.myrecipewhisper.backend.recipe.repository.FavoriteRecipeRepository;
 import com.myrecipewhisper.backend.recipe.service.FavoriteRecipeService;
 import com.myrecipewhisper.backend.recipe.service.external.ExternalRecipeClient;
@@ -20,7 +20,7 @@ import com.myrecipewhisper.backend.user.repository.UserRepository;
 @Service
 public class FavoriteRecipeServiceImpl implements FavoriteRecipeService {
 
-    private final FavoriteMapper favoriteRecipeMapper;
+    private final RecipeMapper recipeMapper;
     private final UserRepository userRepository;
     private final FavoriteRecipeRepository favoriteRecipeRepository;
     private final ExternalRecipeClient externalRecipeClient;
@@ -28,12 +28,12 @@ public class FavoriteRecipeServiceImpl implements FavoriteRecipeService {
     public FavoriteRecipeServiceImpl(
             UserRepository userRepository,
             FavoriteRecipeRepository favoriteRecipeRepository,
-            FavoriteMapper favoriteRecipeMapper,
+            RecipeMapper recipeMapper,
             ExternalRecipeClient externalRecipeClient) {
 
         this.userRepository = userRepository;
         this.favoriteRecipeRepository = favoriteRecipeRepository;
-        this.favoriteRecipeMapper = favoriteRecipeMapper;
+        this.recipeMapper = recipeMapper;
         this.externalRecipeClient = externalRecipeClient;
     }
 
@@ -83,10 +83,30 @@ public class FavoriteRecipeServiceImpl implements FavoriteRecipeService {
         return favoriteRecipeRepository.findAllByUserId(user.getId())
                 .stream()
                 .map(fav -> {
-                    RecipeDTO recipe = externalRecipeClient.getRecipeDetails(fav.getRecipeId());
+                    var external = externalRecipeClient.getRecipeDetails(fav.getRecipeId());
+                    if (external == null)
+                        return null;
+                    RecipeDTO recipe = recipeMapper.toDTO(external);
+                    recipe = new RecipeDTO(
+                            recipe.id(),
+                            recipe.title(),
+                            recipe.image(),
+                            recipe.readyInMinutes(),
+                            recipe.servings(),
+                            true,
+                            recipe.tags());
 
-                    return favoriteRecipeMapper.toDTO(fav, recipe);
+                    return new FavoriteRecipeDTO(
+                            recipe.id(),
+                            fav.getAddedAt(),
+                            recipe.title(),
+                            recipe.image(),
+                            recipe.readyInMinutes(),
+                            recipe.servings()
+
+                );
                 })
+                .filter(dto -> dto != null)
                 .sorted(Comparator.comparing(FavoriteRecipeDTO::addedAt).reversed())
                 .toList();
     }
