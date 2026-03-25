@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.myrecipewhisper.backend.recipe.dto.RecipeDTO;
 import com.myrecipewhisper.backend.recipe.dto.RecipeSearchRequestDTO;
-import com.myrecipewhisper.backend.recipe.service.impl.RecipeService;
+import com.myrecipewhisper.backend.recipe.service.impl.RecipeServiceImp;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/api/recipes")
 @RequiredArgsConstructor
 public class RecipeController {
-    private final RecipeService recipeService;
+    private final RecipeServiceImp recipeService;
 
     @PostMapping("/search")
     public ResponseEntity<List<RecipeDTO>> searchRecipes(@Valid @RequestBody RecipeSearchRequestDTO dto) {
