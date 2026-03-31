@@ -8,8 +8,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.myrecipewhisper.backend.common.configs.SpoonacularProperties;
-import com.myrecipewhisper.backend.recipe.dto.ExternalRecipeItemDTO;
 import com.myrecipewhisper.backend.recipe.dto.ExternalRecipeResponseDTO;
+import com.myrecipewhisper.backend.recipe.dto.external.ExternalRecipeItemDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
