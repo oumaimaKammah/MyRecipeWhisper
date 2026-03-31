@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.myrecipewhisper.backend.recipe.dto.ExternalRecipeResponseDTO;
 import com.myrecipewhisper.backend.recipe.dto.RecipeDTO;
 import com.myrecipewhisper.backend.recipe.dto.RecipeSearchRequestDTO;
+import com.myrecipewhisper.backend.recipe.dto.external.ExternalRecipeItemDTO;
 import com.myrecipewhisper.backend.recipe.mapper.RecipeMapper;
 import com.myrecipewhisper.backend.recipe.service.FavoriteRecipeService;
 import com.myrecipewhisper.backend.recipe.service.external.ExternalRecipeClient;
@@ -38,24 +39,22 @@ public class RecipeServiceImp {
             return List.of();
         }
 
-        List<RecipeDTO> recipes = externalResponse.results().stream()
-                .map(recipeMapper::toDTO)
-                .map(mapped -> new RecipeDTO(
-                        mapped.id(),
-                        mapped.title(),
-                        mapped.image(),
-                        mapped.readyInMinutes(),
-                        mapped.servings(),
-                        favoriteRecipeService.isFavorite(mapped.id()),
-                        mapped.tags()))
+        return externalResponse.results().stream()
+                .map(item -> {
+                    RecipeDTO base = recipeMapper.toDTO(item);
+                    ExternalRecipeItemDTO details = externalRecipeClient.getRecipeDetails(item.id());
+                    RecipeDTO full = recipeMapper.toDTO(details);
+                    return new RecipeDTO(
+                            base.id(),
+                            base.title(),
+                            base.image(),
+                            base.readyInMinutes(),
+                            base.servings(),
+                            base.isFavorite(),
+                            base.tags(),
+                            full.ingredients());
+                })
                 .toList();
-        if (dto.tags() != null && !dto.tags().isEmpty()) {
-            recipes = recipes.stream()
-                    .filter(recipe -> recipe.tags() != null &&
-                            recipe.tags().containsAll(dto.tags()))
-                    .toList();
-        }
-        return recipes;
     }
 
     private String mapCuisineId(Integer id) {
@@ -86,7 +85,7 @@ public class RecipeServiceImp {
                 recipeDTO.readyInMinutes(),
                 recipeDTO.servings(),
                 isFavorite,
-                recipeDTO.tags());
+                recipeDTO.tags(), recipeDTO.ingredients());
         return recipeDTO;
     }
 
