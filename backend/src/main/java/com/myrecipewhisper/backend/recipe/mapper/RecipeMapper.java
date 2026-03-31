@@ -5,8 +5,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.myrecipewhisper.backend.recipe.dto.ExternalRecipeItemDTO;
 import com.myrecipewhisper.backend.recipe.dto.RecipeDTO;
+import com.myrecipewhisper.backend.recipe.dto.RecipeIngredientDTO;
+import com.myrecipewhisper.backend.recipe.dto.external.ExternalRecipeItemDTO;
 
 @Component
 public class RecipeMapper {
@@ -15,6 +16,7 @@ public class RecipeMapper {
         if (externalRecipeItemDTO == null) {
             return null;
         }
+
         List<String> tags = new ArrayList<>();
         if (externalRecipeItemDTO.dishTypes() != null)
             tags.addAll(externalRecipeItemDTO.dishTypes());
@@ -22,6 +24,17 @@ public class RecipeMapper {
             tags.addAll(externalRecipeItemDTO.diets());
         if (externalRecipeItemDTO.occasions() != null)
             tags.addAll(externalRecipeItemDTO.occasions());
+
+        List<RecipeIngredientDTO> ingredients = new ArrayList<>();
+        if (externalRecipeItemDTO.extendedIngredients() != null) {
+            externalRecipeItemDTO.extendedIngredients().forEach(ing -> {
+                ingredients.add(new RecipeIngredientDTO(
+                        ing.name(),
+                        ing.amount(),
+                        ing.unit(),
+                        ing.original()));
+            });
+        }
         return new RecipeDTO(
                 externalRecipeItemDTO.id(),
                 externalRecipeItemDTO.title(),
@@ -29,7 +42,8 @@ public class RecipeMapper {
                 externalRecipeItemDTO.readyInMinutes(),
                 externalRecipeItemDTO.servings(),
                 false,
-                tags);
-        }
+                tags,
+                ingredients);
+    }
 
 }
