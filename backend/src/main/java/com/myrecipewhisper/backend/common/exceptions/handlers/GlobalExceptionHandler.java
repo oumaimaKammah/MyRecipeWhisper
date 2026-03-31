@@ -1,10 +1,7 @@
 package com.myrecipewhisper.backend.common.exceptions.handlers;
 
 import com.myrecipewhisper.backend.api.ApiResponse;
-import com.myrecipewhisper.backend.common.exceptions.cuisine.CuisineAlreadyExistsException;
-import com.myrecipewhisper.backend.common.exceptions.cuisine.CuisineNotFoundException;
-import com.myrecipewhisper.backend.common.exceptions.ingredient.IngredientAlreadyExistsException;
-import com.myrecipewhisper.backend.common.exceptions.ingredient.IngredientNotFoundException;
+import com.myrecipewhisper.backend.common.exceptions.ExternalApiException;
 import com.myrecipewhisper.backend.common.exceptions.user.EmailAlreadyUsedException;
 import com.myrecipewhisper.backend.common.exceptions.user.UserNotFoundException;
 import com.myrecipewhisper.backend.common.exceptions.user.UsernameAlreadyUsedException;
@@ -30,9 +27,7 @@ public class GlobalExceptionHandler {
          * Returns a 404 Not Found status with error details.
          */
         @ExceptionHandler({
-                        UserNotFoundException.class,
-                        IngredientNotFoundException.class,
-                        CuisineNotFoundException.class
+                        UserNotFoundException.class
         })
         public ResponseEntity<ApiResponse<Void>> handleNotFound(RuntimeException ex) {
                 log.warn("Resource not found: {}", ex.getMessage());
@@ -49,9 +44,7 @@ public class GlobalExceptionHandler {
          */
         @ExceptionHandler({
                         EmailAlreadyUsedException.class,
-                        UsernameAlreadyUsedException.class,
-                        IngredientAlreadyExistsException.class,
-                        CuisineAlreadyExistsException.class
+                        UsernameAlreadyUsedException.class
         })
         public ResponseEntity<ApiResponse<Void>> handleConflict(RuntimeException ex) {
                 log.warn("Conflict: {}", ex.getMessage());
@@ -105,7 +98,7 @@ public class GlobalExceptionHandler {
         public ResponseEntity<ApiResponse<Void>> handleUnexpected(Exception ex) {
                 log.error("Unexpected error occurred", ex);
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                                .body(new ApiResponse<>(null, "An unexpected error occurred"));
+                                .body(new ApiResponse<>(null, ex.getMessage()));
         }
         /*
          * Handle Invalid Date Format in JSON Requests.
@@ -129,4 +122,15 @@ public class GlobalExceptionHandler {
                                 .badRequest()
                                 .body("Invalid request");
         }
+
+        /**
+         * Handle External API Errors.
+         */
+
+        @ExceptionHandler(ExternalApiException.class)
+        public ResponseEntity<ApiResponse<?>> handleExternalApi(ExternalApiException ex) {
+                return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+                                .body(new ApiResponse<>(null, ex.getMessage()));
+        }
+
 }
