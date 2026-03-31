@@ -8,6 +8,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.myrecipewhisper.backend.common.configs.SpoonacularProperties;
+import com.myrecipewhisper.backend.common.exceptions.ExternalApiException;
 import com.myrecipewhisper.backend.recipe.dto.ExternalRecipeResponseDTO;
 import com.myrecipewhisper.backend.recipe.dto.external.ExternalRecipeItemDTO;
 
@@ -42,8 +43,9 @@ public class ExternalRecipeClient {
         try {
             return getResponse(url, entity, ExternalRecipeResponseDTO.class);
         } catch (Exception e) {
-            log.error("Error calling RapidAPI: {}", e.getMessage());
-            return null;
+            String errorMessage = "RapidAPI error while searching recipes: " + e.getMessage();
+            log.error(errorMessage);
+            throw new ExternalApiException(errorMessage);
         }
     }
 
@@ -63,8 +65,9 @@ public class ExternalRecipeClient {
         try {
             return getResponse(url, entity, ExternalRecipeItemDTO.class);
         } catch (Exception e) {
-            log.error("Error calling RapidAPI for recipe details: {}", e.getMessage());
-            return null;
+            var errorMessage = "RapidAPI error while fetching recipe details: " + e.getMessage();
+            log.error(errorMessage);
+            throw new ExternalApiException(errorMessage);
         }
     }
 
