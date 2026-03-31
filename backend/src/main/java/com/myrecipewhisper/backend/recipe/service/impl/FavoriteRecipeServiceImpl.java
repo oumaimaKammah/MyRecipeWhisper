@@ -94,7 +94,7 @@ public class FavoriteRecipeServiceImpl implements FavoriteRecipeService {
                             recipe.readyInMinutes(),
                             recipe.servings(),
                             true,
-                            recipe.tags());
+                            recipe.tags(), recipe.ingredients());
 
                     return new FavoriteRecipeDTO(
                             recipe.id(),
