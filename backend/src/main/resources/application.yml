@@ -1,0 +1,41 @@
+server:
+  port: 8080
+spring:
+  cache:
+    type: caffeine
+  caffeine:
+    spec: maximumSize=1000,expireAfterWrite=1h
+  config:
+    import: optional:file:../config/.env.properties
+  application:
+    name: MyRecipeWhisper-Backend
+  datasource:
+    url: jdbc:mysql://LOCALHOST:3306/myrecipewhisperdb?useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        "[format_sql]": true
+    show-sql: true
+
+
+spoonacular:
+  api:
+    key: "d751981816msh691761897af6598p181fbbjsnec9336587f4c"
+    host: "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
+  endpoints:
+    search: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch"
+    details: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/{id}/information"
+  defaults:
+      number: 20
+      addRecipeInformation: true
+security:
+  jwt:
+    secret: "q9m8X2l4V7kB1sP0d3F9u2R6y8T1wZ4c7H0kL3pQ5rS9tU2vW1xY0zA3bC6dE8f"
+    expiration-ms: 3600000
